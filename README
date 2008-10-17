@@ -10,7 +10,7 @@ of these assumptions easily.
 Setup
 =====
 
-1. Install plugin
+1. script/plugin install git://github.com/jnunemaker/user_stamp.git
 2. Add user_stamp to application.rb, like the following:
 		
 		class ApplicationController < ActionController::Base
