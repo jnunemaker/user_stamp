@@ -28,4 +28,9 @@ If your user stamped columns and current_user method are different,
 just create an initializer such as config/initializers/user_stamp.rb
 and copy and paste the defaults above, changing them to fit your app.
 
+Problems?
+=========
+
+http://jnunemaker.lighthouseapp.com/projects/18403-user-stamp/overview
+
 Copyright (c) 2008 [John Nunemaker], released under the MIT license
