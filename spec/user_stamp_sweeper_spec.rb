@@ -6,7 +6,7 @@ class PostsController
   end
 end
 
-describe UserStampSweeper, "#before_save" do
+describe UserStampSweeper, "#before_validation" do
   before do
     UserStamp.creator_attribute   = :creator_id
     UserStamp.updater_attribute   = :updater_id
@@ -19,14 +19,14 @@ describe UserStampSweeper, "#before_save" do
     it "should set creator_id if attribute exists" do
       record = mock('Record', :creator_id= => nil, :updater_id= => nil, :new_record? => true)
       record.should_receive(:creator_id=).with(220).once
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
     
     it "should NOT set creator_id if attribute does not exist" do
       record = mock('Record', :new_record? => true, :updater_id= => nil, :respond_to? => false)
       record.should_receive(:respond_to?).with("creator_id=").and_return(false)
       record.should_not_receive(:creator_id=)
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
   end
   
@@ -34,31 +34,31 @@ describe UserStampSweeper, "#before_save" do
     it "should NOT set creator_id if attribute exists" do
       record = mock('Record', :creator_id= => nil, :updater_id= => nil, :new_record? => false)
       record.should_not_receive(:creator_id=)
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
     
     it "should NOT set creator_id if attribute does not exist" do
       record = mock('Record', :updater_id= => nil, :new_record? => false)
       record.should_not_receive(:creator_id=)
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
   end
   
   it "should set updater_id if attribute exists" do
     record = mock('Record', :creator_id= => nil, :updater_id= => nil, :new_record? => :false)
     record.should_receive(:updater_id=)
-    @sweeper.before_save(record)
+    @sweeper.before_validation(record)
   end
   
   it "should NOT set updater_id if attribute does not exist" do
     record = mock('Record', :creator_id= => nil, :updater_id= => nil, :new_record? => :false, :respond_to? => false)
     record.should_receive(:respond_to?).with("updater_id=").and_return(false)
     record.should_not_receive(:updater_id=)
-    @sweeper.before_save(record)
+    @sweeper.before_validation(record)
   end
 end
 
-describe UserStampSweeper, "#before_save (with custom attribute names)" do
+describe UserStampSweeper, "#before_validation (with custom attribute names)" do
   before do
     UserStamp.creator_attribute   = :created_by
     UserStamp.updater_attribute   = :updated_by
@@ -71,14 +71,14 @@ describe UserStampSweeper, "#before_save (with custom attribute names)" do
     it "should set created_by if attribute exists" do
       record = mock('Record', :created_by= => nil, :updated_by= => nil, :new_record? => true)
       record.should_receive(:created_by=).with(220).once
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
     
     it "should NOT set created_by if attribute does not exist" do
       record = mock('Record', :new_record? => true, :updated_by= => nil, :respond_to? => false)
       record.should_receive(:respond_to?).with("created_by=").and_return(false)
       record.should_not_receive(:created_by=)
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
   end
   
@@ -86,27 +86,27 @@ describe UserStampSweeper, "#before_save (with custom attribute names)" do
     it "should NOT set created_by if attribute exists" do
       record = mock('Record', :created_by= => nil, :updated_by= => nil, :new_record? => false)
       record.should_not_receive(:created_by=)
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
     
     it "should NOT set created_by if attribute does not exist" do
       record = mock('Record', :updated_by= => nil, :new_record? => false)
       record.should_not_receive(:created_by=)
-      @sweeper.before_save(record)
+      @sweeper.before_validation(record)
     end
   end
   
   it "should set updated_by if attribute exists" do
     record = mock('Record', :created_by= => nil, :updated_by= => nil, :new_record? => :false)
     record.should_receive(:updated_by=)
-    @sweeper.before_save(record)
+    @sweeper.before_validation(record)
   end
   
   it "should NOT set updated_by if attribute does not exist" do
     record = mock('Record', :created_by= => nil, :updated_by= => nil, :new_record? => :false, :respond_to? => false)
     record.should_receive(:respond_to?).with("updated_by=").and_return(false)
     record.should_not_receive(:updated_by=)
-    @sweeper.before_save(record)
+    @sweeper.before_validation(record)
   end
 end
 
