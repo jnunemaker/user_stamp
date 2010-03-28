@@ -41,7 +41,7 @@ class UserStampSweeper < ActionController::Caching::Sweeper
   
   private  
     def current_user
-      if controller.respond_to?(UserStamp.current_user_method)
+      if controller.respond_to?(UserStamp.current_user_method, true)
         controller.send UserStamp.current_user_method
       end
     end
